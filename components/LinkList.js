@@ -27,4 +27,4 @@ export default (props: Props) => (
       }
     `}</style>
   </ul>
-)
+);
