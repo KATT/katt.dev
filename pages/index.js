@@ -3,6 +3,7 @@
 import React, { PropTypes } from 'react';
 
 import Head from 'next/head';
+import LinkList from '../components/LinkList'
 
 
 const KATTCORP_LOGO = `\
@@ -21,12 +22,12 @@ export default () => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <pre>{KATTCORP_LOGO}</pre>
-    <ul>
-      <li><a href="https://github.com/KATTCORP">github</a></li>
-      <li><a href="https://twitter.com/alexheartjs">twitter</a></li>
-      <li><a href="https://www.linkedin.com/in/johanssonalexander">linkedin</a></li>
-      <li><a href="mailto: alexander@n1s.se">email</a></li>
-    </ul>
+    <LinkList items={[
+      {href: 'https://github.com/KATTCORP', title: 'github'},
+      {href: 'https://twitter.com/alexheartjs', title: 'github'},
+      {href: 'https://www.linkedin.com/in/johanssonalexander', title: 'linkedin'},
+      {href: 'mailto: alexander@n1s.se', title: 'email'},
+    ]} />
     <style jsx>{`
       div {
         text-align: center;
@@ -34,17 +35,6 @@ export default () => (
       pre {
         text-align: left;
         display: inline-block;
-      }
-      ul {
-        display: flex;
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-      }
-      li {
-        flex: 1;
-        margin: 0;
-        padding: 0 5px;
       }
     `}</style>
     <style global jsx>{`
