@@ -1,4 +1,5 @@
 // @flow
+
 import React, { PropTypes } from 'react';
 
 import Head from 'next/head';
@@ -13,7 +14,7 @@ const KATTCORP_LOGO = `\
 
  KATTCORP LTD.`;
 
-const index = props => (
+export default () => (
   <div>
     <Head>
       <title>KATTCORP LTD.</title>
@@ -61,14 +62,3 @@ const index = props => (
     `}</style>
   </div>
 );
-
-index.propTypes = {
-  isServer: PropTypes.bool.isRequired,
-};
-
-index.getInitialProps = ({ req }) => ({
-  isServer: !!req,
-});
-
-
-export default index;
