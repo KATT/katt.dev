@@ -8,6 +8,12 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "flow": "flow",
     "start": "next start"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "flow-bin": "^0.49.1"
   }
 }
