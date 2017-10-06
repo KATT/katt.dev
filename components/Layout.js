@@ -1,7 +1,9 @@
-import React from 'react';
-import Head from 'next/head';
+import React from "react";
+import Head from "next/head";
 
-import { initGA, logPageView } from '../utils/analytics';
+import JSONLD from "./JSONLD";
+import { JSONLD_KATTCORP } from "../utils/jsonld";
+import { initGA, logPageView } from "../utils/analytics";
 
 export default class Layout extends React.Component {
   componentDidMount() {
@@ -11,16 +13,22 @@ export default class Layout extends React.Component {
     }
     logPageView();
   }
+
   render() {
     return (
       <div>
         <Head>
           <title>KATTCORP LTD.</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link rel="canonical" href="https://kattcorp.co.uk/" />
         </Head>
         {this.props.children}
         <style global jsx>{`
-          html, body {
+          html,
+          body {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -37,6 +45,7 @@ export default class Layout extends React.Component {
             text-align: center;
           }
         `}</style>
+        <JSONLD data={JSONLD_KATTCORP} />
       </div>
     );
   }

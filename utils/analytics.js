@@ -1,3 +1,5 @@
+// @flow
+
 import ReactGA from 'react-ga';
 
 export const initGA = () => {
@@ -11,13 +13,13 @@ export const logPageView = () => {
   ReactGA.pageview(window.location.pathname);
 };
 
-export const logEvent = (category = '', action = '') => {
+export const logEvent = (category:string = '', action:string = '') => {
   if (category && action) {
     ReactGA.event({ category, action });
   }
 };
 
-export const logException = (description = '', fatal = false) => {
+export const logException = (description:string = '', fatal:bool = false) => {
   if (description) {
     ReactGA.exception({ description, fatal });
   }

@@ -4,7 +4,7 @@
   "globals": {
     "document": true,
     "window": true,
-    "process": true,
+    "process": true
   },
   "rules": {
     "import/extensions": 0,
@@ -14,5 +14,7 @@
     "react/react-in-jsx-scope": 0,
     "react/prop-types": 0,
     "linebreak-style": 0,
+    "comma-dangle": ["error", "always-multiline"],
+    "quotes": ["error", "single"]
   }
 }
