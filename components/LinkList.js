@@ -2,17 +2,20 @@
 
 type Link = {
   href: string,
-  title: string,
-}
+  title: string
+};
 
 type Props = {
-  items: Array<Link>,
-}
-
+  items: Array<Link>
+};
 
 export default (props: Props) => (
   <ul>
-    {props.items.map(link => <li key={link.href}><a href={link.href}>{link.title}</a></li>)}
+    {props.items.map(link => (
+      <li key={link.href}>
+        <a href={link.href}>{link.title}</a>
+      </li>
+    ))}
     <style jsx>{`
       ul {
         display: flex;
@@ -24,6 +27,7 @@ export default (props: Props) => (
         flex: 1;
         margin: 0;
         padding: 0 5px;
+        text-transform: lowercase;
       }
     `}</style>
   </ul>
