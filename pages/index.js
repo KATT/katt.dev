@@ -15,7 +15,7 @@ export default () => (
           href: "https://www.linkedin.com/in/johanssonalexander",
           title: "LinkedIn"
         },
-        { href: "mailto: alexander@n1s.se", title: "Email" }
+        { href: "mailto: alex@n1s.se", title: "Email" }
       ]}
     />
   </Layout>
