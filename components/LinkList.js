@@ -2,22 +2,20 @@
 
 type Link = {
   href: string,
-  title: string,
+  title: string
 };
 
 type Props = {
-  items: Array<Link>,
+  items: Array<Link>
 };
 
-export default (props: Props) =>
-  (<ul>
-    {props.items.map(link =>
-      (<li key={link.href}>
-        <a href={link.href}>
-          {link.title}
-        </a>
-      </li>),
-    )}
+export default (props: Props) => (
+  <ul>
+    {props.items.map(link => (
+      <li key={link.href}>
+        <a href={link.href}>{link.title}</a>
+      </li>
+    ))}
     <style jsx>{`
       ul {
         display: flex;
@@ -32,4 +30,5 @@ export default (props: Props) =>
         text-transform: lowercase;
       }
     `}</style>
-  </ul>);
+  </ul>
+);
