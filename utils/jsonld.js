@@ -20,8 +20,9 @@ export const JSONLD_KATTCORP = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    contactType: "Managing Director",
-    email: "alex@n1s.se"
+    contactType: "sales",
+    email: "alex@n1s.se",
+    url: "https://twitter.com/alexheartjs"
   },
   sameAs: [
     "https://github.com/KATT",
