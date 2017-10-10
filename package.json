@@ -1,10 +1,10 @@
 {
   "name": "kattcorp.co.uk",
   "dependencies": {
-    "next": "^2.4.6",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-ga": "^2.2.0"
+    "next": "^4.0.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-ga": "^2.3.5"
   },
   "scripts": {
     "dev": "next",
@@ -17,18 +17,21 @@
     "*.{js,json,css}": ["prettier --write", "git add"]
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "^8.0.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.0.1",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^5.0.1",
-    "eslint-plugin-react": "^7.0.1",
-    "flow-bin": "^0.49.1",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb": "^16.0.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "flow-bin": "^0.56.0",
     "husky": "^0.14.3",
     "lint-staged": "^4.2.3",
     "prettier": "^1.7.4",
     "prettier-eslint": "^8.2.0"
+  },
+  "now": {
+    "alias": ["kattcorp.co.uk", "kattcorp.com"]
   }
 }
