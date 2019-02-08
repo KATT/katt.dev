@@ -1,15 +1,13 @@
-// @flow
+interface ILink {
+  href: string;
+  title: string;
+}
 
-type Link = {
-  href: string,
-  title: string
-};
+interface IProps {
+  items: ILink[];
+}
 
-type Props = {
-  items: Array<Link>
-};
-
-export default (props: Props) => (
+const LinkList: React.FunctionComponent<IProps> = props => (
   <ul>
     {props.items.map(link => (
       <li key={link.href}>
@@ -32,3 +30,5 @@ export default (props: Props) => (
     `}</style>
   </ul>
 );
+
+export default LinkList;
