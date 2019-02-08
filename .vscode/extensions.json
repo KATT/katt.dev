@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "EditorConfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "blanu.vscode-styled-jsx",
+    "eg2.tslint"
+  ]
+}

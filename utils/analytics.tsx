@@ -1,5 +1,3 @@
-// @flow
-
 import ReactGA from 'react-ga';
 
 export const initGA = () => {
@@ -19,7 +17,7 @@ export const logEvent = (category:string = '', action:string = '') => {
   }
 };
 
-export const logException = (description:string = '', fatal:bool = false) => {
+export const logException = (description:string = '', fatal:boolean = false) => {
   if (description) {
     ReactGA.exception({ description, fatal });
   }

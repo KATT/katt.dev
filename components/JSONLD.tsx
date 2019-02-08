@@ -1,10 +1,8 @@
-// @flow
+interface IProps {
+  data: any;
+}
 
-type Props = {
-  data: object
-};
-
-export default ({ data }: Props) => {
+export default ({ data }: IProps) => {
   return (
     <script
       type="application/ld+json"

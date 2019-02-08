@@ -1,12 +1,19 @@
-import React from "react";
-import Head from "next/head";
+import Head from 'next/head';
+import React from 'react';
 
-import JSONLD from "./JSONLD";
-import { JSONLD_KATTCORP } from "../utils/jsonld";
-import { initGA, logPageView } from "../utils/analytics";
+import { initGA, logPageView } from '../utils/analytics';
+import { JSONLD_KATTCORP } from '../utils/jsonld';
+import JSONLD from './JSONLD';
+
+declare global {
+  // tslint:disable-next-line:interface-name
+  interface Window {
+    GA_INITIALIZED?: boolean;
+  }
+}
 
 export default class Layout extends React.Component {
-  componentDidMount() {
+  public componentDidMount() {
     if (!window.GA_INITIALIZED) {
       initGA();
       window.GA_INITIALIZED = true;
@@ -14,7 +21,7 @@ export default class Layout extends React.Component {
     logPageView();
   }
 
-  render() {
+  public render() {
     return (
       <div>
         <Head>

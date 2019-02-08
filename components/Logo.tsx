@@ -1,5 +1,3 @@
-// @flow
-
 const KATTCORP_LOGO = `
 <!--googleoff: index-->
              / )
@@ -10,7 +8,7 @@ const KATTCORP_LOGO = `
 <!--googleon: index-->
  KATTCORP LTD.`;
 
-export default () => (
+const Logo: React.FunctionComponent = () => (
   <div>
     <pre dangerouslySetInnerHTML={{ __html: KATTCORP_LOGO }} />
     <style>{`
@@ -21,3 +19,5 @@ export default () => (
       `}</style>
   </div>
 );
+
+export default Logo;
