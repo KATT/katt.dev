@@ -1,5 +1,6 @@
 {
-  "name": "kattcorp.co.uk",
+  "name": "kattcorp.com",
+  "private": true,
   "dependencies": {
     "@zeit/next-typescript": "^1.1.1",
     "next": "^7.0.2",
