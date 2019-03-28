@@ -1,5 +1,7 @@
 {
   "version": 2,
   "name": "kattcorp.com",
-  "alias": ["kattcorp.com", "kattcorp.com", "kattcorp.se"]
+  "builds": [{ "src": "package.json", "use": "@now/next" }],
+  "alias": ["kattcorp.com", "kattcorp.com", "kattcorp.se"],
+  "routes": [{ "src": "/", "dest": "/server/index" }]
 }
