@@ -30,7 +30,7 @@ export default class Layout extends React.Component {
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
-          <link rel="canonical" href="https://kattcorp.co.uk/" />
+          <link rel="canonical" href="https://kattcorp.com/" />
         </Head>
         {this.props.children}
         <style global jsx>{`
