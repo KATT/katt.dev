@@ -1,5 +1,6 @@
 {
   "name": "kattcorp.co.uk",
+  "private": true,
   "dependencies": {
     "@zeit/next-typescript": "^1.1.1",
     "next": "^7.0.2",
@@ -9,7 +10,7 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "now-build": "next build && next export -o dist",
     "start": "next start",
     "precommit": "lint-staged"
   },
@@ -33,12 +34,5 @@
     "prettier": "^1.16.4",
     "tslint": "^5.12.1",
     "typescript": "^3.3.3"
-  },
-  "now": {
-    "alias": [
-      "kattcorp.co.uk",
-      "kattcorp.com",
-      "kattcorp.se"
-    ]
   }
 }
