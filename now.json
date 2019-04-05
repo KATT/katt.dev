@@ -1,3 +1,5 @@
 {
+  "version": 2,
+  "builds": [{ "src": "next.config.js", "use": "@now/next" }],
   "alias": ["kattcorp.co.uk", "kattcorp.com", "kattcorp.se"]
 }
