@@ -15,7 +15,7 @@ const IndexPage: React.FunctionComponent = () => (
           href: 'https://www.linkedin.com/in/johanssonalexander',
           title: 'LinkedIn',
         },
-        { href: 'mailto: alex@n1s.se', title: 'Email' },
+        { href: 'mailto: alex@kattcorp.se', title: 'Email' },
       ]}
     />
   </Layout>

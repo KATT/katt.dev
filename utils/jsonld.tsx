@@ -3,7 +3,7 @@ export const JSONLD_KATTCORP = {
   '@type': 'Organization',
   name: 'KATTCORP',
   legalName: 'KATTCORP LTD.',
-  url: 'http://kattcorp.co.uk',
+  url: 'http://kattcorp.com',
   foundingDate: '2016-10-26',
   founders: [
     {
@@ -21,7 +21,7 @@ export const JSONLD_KATTCORP = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'sales',
-    email: 'alex@n1s.se',
+    email: 'alex@kattcorp.com',
     url: 'https://twitter.com/alexheartjs',
   },
   sameAs: [
