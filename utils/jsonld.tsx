@@ -22,14 +22,14 @@ export const JSONLD_KATTCORP = {
     '@type': 'ContactPoint',
     contactType: 'sales',
     email: 'alex@kattcorp.com',
-    url: 'https://twitter.com/alexheartjs',
+    url: 'https://twitter.com/alexdotjs',
   },
   sameAs: [
     'https://github.com/KATT',
     'https://github.com/KATTCORP',
     'https://www.linkedin.com/in/johanssonalexander/',
     'https://www.linkedin.com/company/19376256/',
-    'https://twitter.com/alexheartjs',
+    'https://twitter.com/alexdotjs',
     'https://beta.companieshouse.gov.uk/company/10447485',
   ],
 };

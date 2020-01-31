@@ -10,7 +10,7 @@ const IndexPage: NextFunctionComponent = () => (
     <LinkList
       items={[
         { href: 'https://github.com/KATT', title: 'GitHub' },
-        { href: 'https://twitter.com/alexheartjs', title: 'Twitter' },
+        { href: 'https://twitter.com/alexdotjs', title: 'Twitter' },
         {
           href: 'https://www.linkedin.com/in/johanssonalexander',
           title: 'LinkedIn',
