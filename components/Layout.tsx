@@ -12,7 +12,9 @@ declare global {
   }
 }
 
-export default class Layout extends React.Component {
+export default class Layout extends React.Component<{
+  children: React.ReactNode;
+}> {
   public componentDidMount() {
     if (!window.GA_INITIALIZED) {
       initGA();
@@ -27,10 +29,10 @@ export default class Layout extends React.Component {
         <Head>
           <title>KATTCORP LTD.</title>
           <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
+            name='viewport'
+            content='initial-scale=1.0, width=device-width'
           />
-          <link rel="canonical" href="https://kattcorp.com/" />
+          <link rel='canonical' href='https://kattcorp.com/' />
         </Head>
         {this.props.children}
         <style global jsx>{`

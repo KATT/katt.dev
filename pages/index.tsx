@@ -1,10 +1,8 @@
-import { NextFunctionComponent } from 'next';
-import * as React from 'react';
 import Layout from '../components/Layout';
 import LinkList from '../components/LinkList';
 import Logo from '../components/Logo';
 
-const IndexPage: NextFunctionComponent = () => (
+const IndexPage = () => (
   <Layout>
     <Logo />
     <LinkList
