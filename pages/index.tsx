@@ -12,7 +12,7 @@ const IndexPage: NextFunctionComponent = () => (
         { href: 'https://github.com/KATT', title: 'GitHub' },
         { href: 'https://twitter.com/alexdotjs', title: 'Twitter' },
         {
-          href: 'https://www.linkedin.com/in/johanssonalexander',
+          href: 'https://linkedin.com/in/johanssonalexander/',
           title: 'LinkedIn',
         },
         { href: 'mailto: alex@kattcorp.com', title: 'Email' },
@@ -20,26 +20,5 @@ const IndexPage: NextFunctionComponent = () => (
     />
   </Layout>
 );
-
-// Redirect to `kattcorp.com`
-if (typeof window === 'undefined') {
-  const blacklist = [
-    'kattcorp.co.uk',
-    'kattcorp.se',
-    // test:
-    'web-git-feature-docs.katt.now.sh',
-  ];
-
-  IndexPage.getInitialProps = ({ req, res }) => {
-    if (blacklist.includes(req.headers.host)) {
-      res.writeHead(301, {
-        location: 'https://kattcorp.com',
-      });
-      res.end();
-    }
-
-    return {};
-  };
-}
 
 export default IndexPage;
