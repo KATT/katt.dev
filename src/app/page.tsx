@@ -27,4 +27,5 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'KATTCORP',
   },
+  metadataBase: new URL('https://katt.dev'),
 };
