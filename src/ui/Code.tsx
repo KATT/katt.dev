@@ -4,7 +4,7 @@ import { unstable_cache } from 'next/cache';
 
 const toHtml = unstable_cache(
   async function (code: string) {
-    return await codeToHtml(`console.log()`, {
+    return await codeToHtml(code, {
       lang: 'ts',
       theme: 'github-dark-default',
       transformers: [
