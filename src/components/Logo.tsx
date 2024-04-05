@@ -4,6 +4,7 @@ const KATTCORP_LOGO = `
 ( @ . @ )     )
  (           )
  //"//""//"//
+ 
   KATTCORP AB`;
 
 export function Logo() {
