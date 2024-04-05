@@ -1,7 +1,5 @@
-import { JSONLD } from '@/components/JSONLD';
 import { LinkList } from '@/components/LinkList';
 import { Logo } from '@/components/Logo';
-import { Metadata } from 'next';
 
 export default function Page() {
   return (
@@ -21,14 +19,3 @@ export default function Page() {
     </main>
   );
 }
-
-export const metadata: Metadata = {
-  title: 'KATTCORP',
-  openGraph: {
-    title: 'KATTCORP',
-  },
-  metadataBase: new URL('https://katt.dev'),
-  alternates: {
-    canonical: '/',
-  },
-};
