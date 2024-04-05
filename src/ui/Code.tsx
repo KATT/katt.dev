@@ -14,18 +14,27 @@ const toHtml = unstable_cache(
   },
   ['codeToHtml'],
 );
+import fs from 'fs/promises';
+
+const readFile = unstable_cache(
+  async function (file: string) {
+    return await fs.readFile(file, 'utf-8');
+  },
+  ['readFile'],
+);
 
 export async function Code(
   props:
-    | { code: string; path?: never }
+    | {
+        code: string;
+        file?: never;
+      }
     | {
         code?: never;
-        path: string;
+        file: string;
       },
 ) {
-  return (
-    <div
-      dangerouslySetInnerHTML={{ __html: await toHtml(props.code as string) }}
-    />
-  );
+  const code = props.code ?? (await readFile(`${process.cwd()}/${props.file}`));
+  const html = await toHtml(code);
+  return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
