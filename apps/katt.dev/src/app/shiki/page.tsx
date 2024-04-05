@@ -1,5 +1,5 @@
-import { Code } from '@/ui/Code';
-
+import { Code } from "@/ui/Code";
+import { foo } from "@repo/shiki";
 export default async function Page() {
   return (
     <ul className="space-y-6">
