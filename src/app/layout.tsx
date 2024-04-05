@@ -1,4 +1,4 @@
-import { JsonLD } from '@/components/JSONLD';
+import { JsonLd } from '@/ui/JsonLd';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -16,7 +16,7 @@ export default function RootLayout({
       <body className={`${inter.className} h-full min-h-screen flex flex-col`}>
         {children}
 
-        <JsonLD
+        <JsonLd
           data={{
             '@context': 'https://schema.org',
             '@type': 'Organization',

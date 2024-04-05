@@ -1,5 +1,5 @@
-import { LinkList } from '@/components/LinkList';
-import { Logo } from '@/components/Logo';
+import { LinkList } from '@/ui/LinkList';
+import { Logo } from '@/ui/Logo';
 
 export default function Page() {
   return (
