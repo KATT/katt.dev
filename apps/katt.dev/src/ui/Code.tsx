@@ -1,6 +1,9 @@
 import { ShikiSchemaInput, getShikiHtml } from "@repo/shiki";
 import fs from "fs/promises";
 
+import "@shikijs/twoslash/style-classic.css";
+import "@shikijs/twoslash/style-rich.css";
+
 export async function Code(
   props: Omit<ShikiSchemaInput, "code"> &
     (
