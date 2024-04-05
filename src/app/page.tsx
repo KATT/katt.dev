@@ -28,4 +28,7 @@ export const metadata: Metadata = {
     title: 'KATTCORP',
   },
   metadataBase: new URL('https://katt.dev'),
+  alternates: {
+    canonical: '/',
+  },
 };
