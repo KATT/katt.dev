@@ -1,5 +1,6 @@
 import { codeToHtml } from 'shiki';
 // import { transformerTwoslash } from '@shikijs/twoslash';
+import fs from 'fs/promises';
 import { unstable_cache } from 'next/cache';
 
 const toHtml = unstable_cache(
@@ -14,7 +15,6 @@ const toHtml = unstable_cache(
   },
   ['codeToHtml'],
 );
-import fs from 'fs/promises';
 
 const readFile = unstable_cache(
   async function (file: string) {
