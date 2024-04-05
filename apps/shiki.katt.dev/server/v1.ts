@@ -11,51 +11,14 @@ import { codeToHtml } from "shiki";
 import { z } from "zod";
 import { env } from "../env.js";
 import { ROOT_DIR } from "./utils.js";
+import { ShikiSchemaOutput, shikiSchema } from "@repo/shiki";
 
-type Options = Parameters<typeof codeToHtml>[1];
-const langs = [
-  "js",
-  "json",
-  "jsx",
-  "markdown",
-  "ts",
-  "tsx",
-] as const satisfies Options["lang"][];
-
-const booleanSchema = z
-  .enum(["true", "false", "1", "0", "yes", "no"])
-  .transform((value) => {
-    switch (value) {
-      case "true":
-      case "1":
-      case "yes":
-        return true;
-      case "false":
-      case "0":
-      case "no":
-        return false;
-    }
-    throw new Error(`Invalid boolean ${value}`);
-  });
-const schema = z.object({
-  lang: z.enum(langs),
-  theme: z.string().optional().default("github-dark"),
-  code: z.string(),
-  renderer: z.enum(["classic", "rich"]).default("rich"),
-  htmlDoc: booleanSchema
-    .default("0")
-    .describe("If true, the output will be wrapped in a full HTML document"),
-});
-
-export type SchemaInput = z.input<typeof schema>;
-export type SchemaOutput = z.output<typeof schema>;
-
-const getSchema = schema.or(
+const getSchema = shikiSchema.or(
   z
     .object({
       hash: z.string(),
     })
-    .transform((data, ctx): SchemaOutput => {
+    .transform((data, ctx): ShikiSchemaOutput => {
       const input = hashToInput.get(data.hash);
       if (!input) {
         ctx.addIssue({
@@ -69,13 +32,13 @@ const getSchema = schema.or(
     })
 );
 
-const hashToInput = new Map<string, SchemaOutput>();
+const hashToInput = new Map<string, ShikiSchemaOutput>();
 const cache = new LRUCache({
   // ttl 1 year
   ttl: 1000 * 60 * 60 * 24 * 365,
   ttlAutopurge: false,
   fetchMethod: async (_input: string) => {
-    const input = JSON.parse(_input) as SchemaOutput;
+    const input = JSON.parse(_input) as ShikiSchemaOutput;
     const html = await codeToHtml(input.code, {
       lang: input.lang,
       theme: "github-dark-default",
@@ -120,7 +83,7 @@ v1Router.get("/", async (req, res) => {
 });
 
 v1Router.post("/", async (req, res) => {
-  const input = schema.safeParse(req.body);
+  const input = shikiSchema.safeParse(req.body);
 
   if (!input.success) {
     return res.status(400).json({ error: input.error });

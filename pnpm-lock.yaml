@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      zod:
+        specifier: ^3.21.4
+        version: 3.22.4
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -23,9 +27,9 @@ importers:
 
   apps/katt.dev:
     dependencies:
-      '@shikijs/twoslash':
-        specifier: ^1.2.4
-        version: 1.2.4(typescript@5.4.4)
+      '@repo/shiki':
+        specifier: workspace:*
+        version: link:../../packages/shiki
       '@vercel/analytics':
         specifier: ^1.2.2
         version: 1.2.2(next@14.1.4)(react@18.2.0)
@@ -44,9 +48,6 @@ importers:
       schema-dts:
         specifier: ^1.1.2
         version: 1.1.2(typescript@5.4.4)
-      shiki:
-        specifier: ^1.2.4
-        version: 1.2.4
       twoslash-cdn:
         specifier: ^0.2.5
         version: 0.2.5(typescript@5.4.4)
@@ -57,9 +58,6 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
-      '@repo/shiki':
-        specifier: workspace:*
-        version: link:../../packages/shiki
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -90,6 +88,9 @@ importers:
 
   apps/shiki.katt.dev:
     dependencies:
+      '@repo/shiki':
+        specifier: workspace:*
+        version: link:../../packages/shiki
       '@shikijs/twoslash':
         specifier: ^1.2.4
         version: 1.2.4(typescript@5.4.4)
@@ -126,9 +127,6 @@ importers:
       wait-port:
         specifier: ^1.1.0
         version: 1.1.0
-      zod:
-        specifier: ^3.21.4
-        version: 3.22.4
     devDependencies:
       tsx:
         specifier: ^3.12.7
@@ -159,6 +157,13 @@ importers:
         version: 5.3.3
 
   packages/shiki:
+    dependencies:
+      '@shikijs/twoslash':
+        specifier: ^1.2.4
+        version: 1.2.4(typescript@5.4.4)
+      shiki:
+        specifier: ^1.2.4
+        version: 1.2.4
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*

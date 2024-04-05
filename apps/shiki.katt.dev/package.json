@@ -13,6 +13,7 @@
   "type": "module",
   "author": "",
   "dependencies": {
+    "@repo/shiki": "workspace:*",
     "@shikijs/twoslash": "^1.2.4",
     "@types/body-parser": "^1.19.2",
     "@types/express": "^4.17.17",
@@ -24,8 +25,7 @@
     "shiki": "^1.2.4",
     "shiki-twoslash": "^3.1.2",
     "typescript": "^5.3.2",
-    "wait-port": "^1.1.0",
-    "zod": "^3.21.4"
+    "wait-port": "^1.1.0"
   },
   "devDependencies": {
     "tsx": "^3.12.7"

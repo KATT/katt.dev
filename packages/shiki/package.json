@@ -5,8 +5,13 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "type": "module",
   "scripts": {
     "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "@shikijs/twoslash": "^1.2.4",
+    "shiki": "^1.2.4"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
