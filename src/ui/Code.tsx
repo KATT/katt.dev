@@ -15,6 +15,17 @@ const toHtml = unstable_cache(
   ['codeToHtml'],
 );
 
-export async function Code(props: { code: string }) {
-  return <div dangerouslySetInnerHTML={{ __html: await toHtml(props.code) }} />;
+export async function Code(
+  props:
+    | { code: string; path?: never }
+    | {
+        code?: never;
+        path: string;
+      },
+) {
+  return (
+    <div
+      dangerouslySetInnerHTML={{ __html: await toHtml(props.code as string) }}
+    />
+  );
 }
