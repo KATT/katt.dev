@@ -13,7 +13,7 @@ export function Logo() {
     <div>
       <pre
         dangerouslySetInnerHTML={{ __html: KATTCORP_LOGO }}
-        className="text-left inline-block"
+        className="text-left inline-block text-sm leading-tight"
       />
     </div>
   );
