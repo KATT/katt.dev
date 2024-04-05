@@ -1,8 +1,9 @@
 {
   "recommendations": [
-    "EditorConfig.editorconfig",
+    "yzhang.markdown-all-in-one",
     "esbenp.prettier-vscode",
     "blanu.vscode-styled-jsx",
-    "eg2.tslint"
+    "orta.vscode-twoslash-queries",
+    "dbaeumer.vscode-eslint"
   ]
 }
