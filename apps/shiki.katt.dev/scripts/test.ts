@@ -1,8 +1,9 @@
+import { ShikiSchemaInput } from "@repo/shiki";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import waitPort from "wait-port";
-import { SchemaInput } from "../server/v1.js";
+
 await waitPort({
   port: 3001,
 });
@@ -12,7 +13,7 @@ const dirname = path.dirname(filename); // get the name of the directory
 
 const code = await fs.readFile(dirname + "/test.snippet.ts", "utf-8");
 
-const schemaInput: SchemaInput = {
+const schemaInput: ShikiSchemaInput = {
   code,
   lang: "ts",
   renderer: "rich",
@@ -43,7 +44,7 @@ const schemaInput: SchemaInput = {
 {
   console.log("<GET>");
 
-  const url = new URL("http://localhost:3000/v1");
+  const url = new URL("http://localhost:3001/v1");
   for (const [key, value] of Object.entries(schemaInput)) {
     url.searchParams.set(key, value);
   }

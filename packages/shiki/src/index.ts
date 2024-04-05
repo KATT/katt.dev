@@ -41,3 +41,26 @@ export type ShikiSchemaInput = z.input<typeof shikiSchema>;
 export type ShikiSchemaOutput = z.output<typeof shikiSchema>;
 
 export { codeToHtml } from "shiki";
+
+const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3001"
+    : "https://shiki.katt.dev";
+
+export async function getShikiHtml(input: ShikiSchemaInput) {
+  const url = new URL(baseUrl);
+  url.pathname = "/v1";
+  for (const [key, value] of Object.entries(input)) {
+    url.searchParams.set(key, value);
+  }
+
+  console.log(url);
+
+  await fetch(url);
+  const res = await fetch(url);
+
+  if (res.status !== 200) {
+    throw new Error(`Failed to fetch ${url.toString()}: ${res.status}`);
+  }
+  return await res.text();
+}
