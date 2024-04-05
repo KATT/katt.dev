@@ -1,5 +1,5 @@
 import { codeToHtml } from 'shiki';
-// import { transformerTwoslash } from '@shikijs/twoslash';
+import { transformerTwoslash } from '@shikijs/twoslash';
 import fs from 'fs/promises';
 import { unstable_cache } from 'next/cache';
 
@@ -9,7 +9,7 @@ const toHtml = unstable_cache(
       lang: 'ts',
       theme: 'github-dark-default',
       transformers: [
-        // transformerTwoslash({}), // <-- here doesn't work
+        transformerTwoslash({}), // <-- here doesn't work
       ],
     });
   },
