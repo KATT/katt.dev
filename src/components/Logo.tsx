@@ -6,7 +6,7 @@ const KATTCORP_LOGO = `
  (           )
  //"//""//"//
 <!--googleon: index-->
- KATTCORP LTD.`;
+  KATTCORP AB`;
 
 export function Logo() {
   return (
