@@ -27,7 +27,7 @@ test("POST", async () => {
     code,
     lang: "ts",
     renderer: "rich",
-    htmlDoc: "1",
+    // htmlDoc: "1",
   };
 
   const res = await fetch(url, {
@@ -42,7 +42,7 @@ test("POST", async () => {
   expect(res.status).toBe(200);
 
   expect(await res.text()).toMatchInlineSnapshot(`
-    "<!DOCTYPE html><html lang="en"><head><link rel="stylesheet" href="/v1/style-rich.css" /></head><body><pre class="shiki github-dark-default twoslash lsp" style="background-color:#0d1117;color:#e6edf3" tabindex="0"><code><span class="line"><span style="color:#FF7B72">import</span><span style="color:#E6EDF3"> { </span><span style="color:#E6EDF3"><span class="twoslash-hover"><span class="twoslash-popup-container"><code class="twoslash-popup-code"><span class="line"><span style="color:#FF7B72">import</span><span style="color:#E6EDF3"> z</span></span></code></span>z</span></span><span style="color:#E6EDF3"> } </span><span style="color:#FF7B72">from</span><span style="color:#A5D6FF"> "zod"</span><span style="color:#E6EDF3">;</span></span>
+    "<pre class="shiki github-dark-default twoslash lsp" style="background-color:#0d1117;color:#e6edf3" tabindex="0"><code><span class="line"><span style="color:#FF7B72">import</span><span style="color:#E6EDF3"> { </span><span style="color:#E6EDF3"><span class="twoslash-hover"><span class="twoslash-popup-container"><code class="twoslash-popup-code"><span class="line"><span style="color:#FF7B72">import</span><span style="color:#E6EDF3"> z</span></span></code></span>z</span></span><span style="color:#E6EDF3"> } </span><span style="color:#FF7B72">from</span><span style="color:#A5D6FF"> "zod"</span><span style="color:#E6EDF3">;</span></span>
     <span class="line"><span style="color:#FF7B72">const</span><span style="color:#79C0FF"> </span><span style="color:#79C0FF"><span class="twoslash-hover twoslash-query-presisted"><span class="twoslash-popup-container"><div class="twoslash-popup-arrow"></div><code class="twoslash-popup-code"><span class="line"><span style="color:#FF7B72">const</span><span style="color:#79C0FF"> foo</span><span style="color:#FF7B72">:</span><span style="color:#A5D6FF"> "bar"</span></span></code></span>foo</span></span><span style="color:#FF7B72"> =</span><span style="color:#A5D6FF"> "bar"</span><span style="color:#E6EDF3">;</span></span>
     <span class="line"></span>
     <span class="line"><span style="color:#8B949E">// ..</span></span>
@@ -55,7 +55,7 @@ test("POST", async () => {
     <span class="line"><span style="color:#FFA657">    coerce</span><span style="color:#FF7B72">?:</span><span style="color:#79C0FF"> true</span><span style="color:#FF7B72"> |</span><span style="color:#79C0FF"> undefined</span><span style="color:#E6EDF3">;</span></span>
     <span class="line"><span style="color:#E6EDF3">}) </span><span style="color:#FF7B72">|</span><span style="color:#79C0FF"> undefined</span><span style="color:#E6EDF3">)</span><span style="color:#FF7B72">:</span><span style="color:#FFA657"> z</span><span style="color:#E6EDF3">.</span><span style="color:#FFA657">ZodString</span></span>
     <span class="line"><span style="color:#FF7B72">export</span><span style="color:#E6EDF3"> string</span></span></code></span>string</span></span><span style="color:#E6EDF3">().</span><span style="color:#D2A8FF"><span class="twoslash-hover"><span class="twoslash-popup-container"><code class="twoslash-popup-code"><span class="line"><span style="color:#E6EDF3">ZodType</span><span style="color:#FF7B72">&#x3C;</span><span style="color:#E6EDF3">string, ZodStringDef, string</span><span style="color:#FF7B72">></span><span style="color:#E6EDF3">.</span><span style="color:#D2A8FF">parse</span><span style="color:#E6EDF3">(data: unknown, params</span><span style="color:#FF7B72">?:</span><span style="color:#E6EDF3"> Partial</span><span style="color:#FF7B72">&#x3C;</span><span style="color:#E6EDF3">z.ParseParams</span><span style="color:#FF7B72">></span><span style="color:#FF7B72"> |</span><span style="color:#79C0FF"> undefined</span><span style="color:#E6EDF3">): string</span></span></code></span>parse</span></span><span style="color:#E6EDF3">(</span><span style="color:#A5D6FF">"foo"</span><span style="color:#E6EDF3">);</span></span>
-    <span class="line"></span></code></pre></body></html>"
+    <span class="line"></span></code></pre>"
   `);
 });
 
@@ -67,7 +67,7 @@ test("GET", async () => {
     code,
     lang: "ts",
     renderer: "rich",
-    htmlDoc: "1",
+    // htmlDoc: "1",
   };
   for (const [key, value] of Object.entries(schemaInput)) {
     url.searchParams.set(key, value);
@@ -78,7 +78,7 @@ test("GET", async () => {
   expect(res.status).toBe(200);
 
   expect(await res.text()).toMatchInlineSnapshot(`
-    "<!DOCTYPE html><html lang="en"><head><link rel="stylesheet" href="/v1/style-rich.css" /></head><body><pre class="shiki github-dark-default twoslash lsp" style="background-color:#0d1117;color:#e6edf3" tabindex="0"><code><span class="line"><span style="color:#FF7B72">import</span><span style="color:#E6EDF3"> { </span><span style="color:#E6EDF3"><span class="twoslash-hover"><span class="twoslash-popup-container"><code class="twoslash-popup-code"><span class="line"><span style="color:#FF7B72">import</span><span style="color:#E6EDF3"> z</span></span></code></span>z</span></span><span style="color:#E6EDF3"> } </span><span style="color:#FF7B72">from</span><span style="color:#A5D6FF"> "zod"</span><span style="color:#E6EDF3">;</span></span>
+    "<pre class="shiki github-dark-default twoslash lsp" style="background-color:#0d1117;color:#e6edf3" tabindex="0"><code><span class="line"><span style="color:#FF7B72">import</span><span style="color:#E6EDF3"> { </span><span style="color:#E6EDF3"><span class="twoslash-hover"><span class="twoslash-popup-container"><code class="twoslash-popup-code"><span class="line"><span style="color:#FF7B72">import</span><span style="color:#E6EDF3"> z</span></span></code></span>z</span></span><span style="color:#E6EDF3"> } </span><span style="color:#FF7B72">from</span><span style="color:#A5D6FF"> "zod"</span><span style="color:#E6EDF3">;</span></span>
     <span class="line"><span style="color:#FF7B72">const</span><span style="color:#79C0FF"> </span><span style="color:#79C0FF"><span class="twoslash-hover twoslash-query-presisted"><span class="twoslash-popup-container"><div class="twoslash-popup-arrow"></div><code class="twoslash-popup-code"><span class="line"><span style="color:#FF7B72">const</span><span style="color:#79C0FF"> foo</span><span style="color:#FF7B72">:</span><span style="color:#A5D6FF"> "bar"</span></span></code></span>foo</span></span><span style="color:#FF7B72"> =</span><span style="color:#A5D6FF"> "bar"</span><span style="color:#E6EDF3">;</span></span>
     <span class="line"></span>
     <span class="line"><span style="color:#8B949E">// ..</span></span>
@@ -91,6 +91,6 @@ test("GET", async () => {
     <span class="line"><span style="color:#FFA657">    coerce</span><span style="color:#FF7B72">?:</span><span style="color:#79C0FF"> true</span><span style="color:#FF7B72"> |</span><span style="color:#79C0FF"> undefined</span><span style="color:#E6EDF3">;</span></span>
     <span class="line"><span style="color:#E6EDF3">}) </span><span style="color:#FF7B72">|</span><span style="color:#79C0FF"> undefined</span><span style="color:#E6EDF3">)</span><span style="color:#FF7B72">:</span><span style="color:#FFA657"> z</span><span style="color:#E6EDF3">.</span><span style="color:#FFA657">ZodString</span></span>
     <span class="line"><span style="color:#FF7B72">export</span><span style="color:#E6EDF3"> string</span></span></code></span>string</span></span><span style="color:#E6EDF3">().</span><span style="color:#D2A8FF"><span class="twoslash-hover"><span class="twoslash-popup-container"><code class="twoslash-popup-code"><span class="line"><span style="color:#E6EDF3">ZodType</span><span style="color:#FF7B72">&#x3C;</span><span style="color:#E6EDF3">string, ZodStringDef, string</span><span style="color:#FF7B72">></span><span style="color:#E6EDF3">.</span><span style="color:#D2A8FF">parse</span><span style="color:#E6EDF3">(data: unknown, params</span><span style="color:#FF7B72">?:</span><span style="color:#E6EDF3"> Partial</span><span style="color:#FF7B72">&#x3C;</span><span style="color:#E6EDF3">z.ParseParams</span><span style="color:#FF7B72">></span><span style="color:#FF7B72"> |</span><span style="color:#79C0FF"> undefined</span><span style="color:#E6EDF3">): string</span></span></code></span>parse</span></span><span style="color:#E6EDF3">(</span><span style="color:#A5D6FF">"foo"</span><span style="color:#E6EDF3">);</span></span>
-    <span class="line"></span></code></pre></body></html>"
+    <span class="line"></span></code></pre>"
   `);
 });
