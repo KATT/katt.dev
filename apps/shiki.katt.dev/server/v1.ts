@@ -15,26 +15,32 @@ import { ROOT_DIR, run } from "./utils.js";
 import { Redis } from "ioredis";
 
 type Storage = {
-  getHash: (hash: string) => Promise<ShikiSchemaOutput | null>;
-  setHash: (hash: string, data: ShikiSchemaOutput) => Promise<void>;
-  getResult: (data: ShikiSchemaOutput) => Promise<string | null>;
-  storeResult: (data: ShikiSchemaOutput, html: string) => Promise<void>;
+  getSchemaOutputForHash: (hash: string) => Promise<ShikiSchemaOutput | null>;
+  setSchemaOutputForHash: (
+    hash: string,
+    data: ShikiSchemaOutput
+  ) => Promise<void>;
+  getResultForSchemaOutput: (data: ShikiSchemaOutput) => Promise<string | null>;
+  setResultForSchemaOutput: (
+    data: ShikiSchemaOutput,
+    html: string
+  ) => Promise<void>;
 };
 const storage = run((): Storage => {
   if (env.REDIS_URL) {
     const redis = new Redis(env.REDIS_URL);
     const redisStorage: Storage = {
-      async getHash(hash) {
+      async getSchemaOutputForHash(hash) {
         const data = await redis.get(hash);
         return data ? JSON.parse(data) : null;
       },
-      async setHash(hash, data) {
+      async setSchemaOutputForHash(hash, data) {
         await redis.set(hash, JSON.stringify(data));
       },
-      async getResult(data) {
+      async getResultForSchemaOutput(data) {
         return redis.get(JSON.stringify(data));
       },
-      async storeResult(data, html) {
+      async setResultForSchemaOutput(data, html) {
         await redis.set(JSON.stringify(data), html);
       },
     };
@@ -43,17 +49,17 @@ const storage = run((): Storage => {
   const hashToInput = new Map<string, ShikiSchemaOutput>();
   const results = new Map<string, string>();
   const mockStorage: Storage = {
-    async getHash(hash) {
+    async getSchemaOutputForHash(hash) {
       return hashToInput.get(hash) ?? null;
     },
-    async setHash(hash, data) {
+    async setSchemaOutputForHash(hash, data) {
       hashToInput.set(hash, data);
     },
-    async getResult(data) {
+    async getResultForSchemaOutput(data) {
       const key = JSON.stringify(data);
       return results.get(key) ?? null;
     },
-    async storeResult(data, html) {
+    async setResultForSchemaOutput(data, html) {
       const key = JSON.stringify(data);
       results.set(key, html);
     },
@@ -67,7 +73,7 @@ const getSchema = shikiSchema.or(
       hash: z.string(),
     })
     .transform(async (data, ctx): Promise<ShikiSchemaOutput> => {
-      const input = await storage.getHash(data.hash);
+      const input = await storage.getSchemaOutputForHash(data.hash);
       if (!input) {
         ctx.addIssue({
           code: "custom",
@@ -93,7 +99,7 @@ v1Router.get("/", async (req, res) => {
     return res.status(400).json({ error: input.error });
   }
 
-  let html = await storage.getResult(input.data);
+  let html = await storage.getResultForSchemaOutput(input.data);
 
   if (!html) {
     html = await codeToHtml(input.data.code, {
@@ -106,7 +112,7 @@ v1Router.get("/", async (req, res) => {
         }),
       ],
     });
-    await storage.storeResult(input.data, html);
+    await storage.setResultForSchemaOutput(input.data, html);
   }
 
   // send html with cache for 1 year
@@ -136,7 +142,7 @@ v1Router.post("/", async (req, res) => {
     .digest("hex");
 
   // store the input
-  await storage.setHash(hash, input.data);
+  await storage.setSchemaOutputForHash(hash, input.data);
 
   // redirect to the hash
   return res.redirect(303, `/v1?hash=${hash}`);
