@@ -1,25 +1,79 @@
+import { ShikiSchemaOutput, shikiSchema } from "@repo/shiki";
 import {
   rendererClassic,
   rendererRich,
   transformerTwoslash,
 } from "@shikijs/twoslash";
 import express from "express";
-import { LRUCache } from "lru-cache";
 import { createHash } from "node:crypto";
 import path from "path";
 import { codeToHtml } from "shiki";
 import { z } from "zod";
 import { env } from "../env.js";
-import { ROOT_DIR } from "./utils.js";
-import { ShikiSchemaOutput, shikiSchema } from "@repo/shiki";
+import { ROOT_DIR, run } from "./utils.js";
+
+import { Redis } from "ioredis";
+
+type Storage = {
+  getSchemaOutputForHash: (hash: string) => Promise<ShikiSchemaOutput | null>;
+  setSchemaOutputForHash: (
+    hash: string,
+    data: ShikiSchemaOutput
+  ) => Promise<void>;
+  getResultForSchemaOutput: (data: ShikiSchemaOutput) => Promise<string | null>;
+  setResultForSchemaOutput: (
+    data: ShikiSchemaOutput,
+    html: string
+  ) => Promise<void>;
+};
+const storage = run((): Storage => {
+  if (env.REDIS_URL) {
+    const redis = new Redis(env.REDIS_URL);
+    const redisStorage: Storage = {
+      async getSchemaOutputForHash(hash) {
+        const data = await redis.get(hash);
+        return data ? JSON.parse(data) : null;
+      },
+      async setSchemaOutputForHash(hash, data) {
+        await redis.set(hash, JSON.stringify(data));
+      },
+      async getResultForSchemaOutput(data) {
+        return redis.get(JSON.stringify(data));
+      },
+      async setResultForSchemaOutput(data, html) {
+        await redis.set(JSON.stringify(data), html);
+      },
+    };
+    return redisStorage;
+  }
+  const hashToInput = new Map<string, ShikiSchemaOutput>();
+  const results = new Map<string, string>();
+  const mockStorage: Storage = {
+    async getSchemaOutputForHash(hash) {
+      return hashToInput.get(hash) ?? null;
+    },
+    async setSchemaOutputForHash(hash, data) {
+      hashToInput.set(hash, data);
+    },
+    async getResultForSchemaOutput(data) {
+      const key = JSON.stringify(data);
+      return results.get(key) ?? null;
+    },
+    async setResultForSchemaOutput(data, html) {
+      const key = JSON.stringify(data);
+      results.set(key, html);
+    },
+  };
+  return mockStorage;
+});
 
 const getSchema = shikiSchema.or(
   z
     .object({
       hash: z.string(),
     })
-    .transform((data, ctx): ShikiSchemaOutput => {
-      const input = hashToInput.get(data.hash);
+    .transform(async (data, ctx): Promise<ShikiSchemaOutput> => {
+      const input = await storage.getSchemaOutputForHash(data.hash);
       if (!input) {
         ctx.addIssue({
           code: "custom",
@@ -31,27 +85,6 @@ const getSchema = shikiSchema.or(
       return input;
     })
 );
-
-const hashToInput = new Map<string, ShikiSchemaOutput>();
-const cache = new LRUCache({
-  // ttl 1 year
-  ttl: 1000 * 60 * 60 * 24 * 365,
-  ttlAutopurge: false,
-  fetchMethod: async (_input: string) => {
-    const input = JSON.parse(_input) as ShikiSchemaOutput;
-    const html = await codeToHtml(input.code, {
-      lang: input.lang,
-      theme: "github-dark-default",
-      transformers: [
-        transformerTwoslash({
-          renderer:
-            input.renderer === "rich" ? rendererRich() : rendererClassic(),
-        }),
-      ],
-    });
-    return html;
-  },
-});
 
 export const v1Router = express.Router();
 
@@ -66,7 +99,21 @@ v1Router.get("/", async (req, res) => {
     return res.status(400).json({ error: input.error });
   }
 
-  const html = await cache.fetch(JSON.stringify(input.data));
+  let html = await storage.getResultForSchemaOutput(input.data);
+
+  if (!html) {
+    html = await codeToHtml(input.data.code, {
+      lang: input.data.lang,
+      theme: "github-dark-default",
+      transformers: [
+        transformerTwoslash({
+          renderer:
+            input.data.renderer === "rich" ? rendererRich() : rendererClassic(),
+        }),
+      ],
+    });
+    await storage.setResultForSchemaOutput(input.data, html);
+  }
 
   // send html with cache for 1 year
   const oneYearInSeconds = 60 * 60 * 24 * 365;
@@ -94,7 +141,8 @@ v1Router.post("/", async (req, res) => {
     .update(JSON.stringify(input.data))
     .digest("hex");
 
-  hashToInput.set(hash, input.data);
+  // store the input
+  await storage.setSchemaOutputForHash(hash, input.data);
 
   // redirect to the hash
   return res.redirect(303, `/v1?hash=${hash}`);
