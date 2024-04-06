@@ -1,0 +1,25 @@
+name: main
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    timeout-minutes: 10
+    env:
+      TURBO_TEAM: trpc-turbocache
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/setup
+      - run: pnpm turbo build
