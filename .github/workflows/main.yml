@@ -11,8 +11,8 @@ jobs:
   build:
     timeout-minutes: 10
     env:
-      TURBO_TOKEN: trpc-turbocache
-      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      TURBO_TEAM: trpc-turbocache
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
     runs-on: ubuntu-latest
 
