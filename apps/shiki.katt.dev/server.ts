@@ -3,7 +3,7 @@ import express from "express";
 import { v1Router } from "./server/v1.js";
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT ?? 3001;
 
 app.use(bodyParser.json());
 
