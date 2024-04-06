@@ -93,7 +93,7 @@ v1Router.get("/", async (req, res) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const input = getSchema.safeParse(req.query);
+  const input = await getSchema.safeParseAsync(req.query);
 
   if (!input.success) {
     return res.status(400).json({ error: input.error });
@@ -130,7 +130,7 @@ v1Router.get("/", async (req, res) => {
 });
 
 v1Router.post("/", async (req, res) => {
-  const input = shikiSchema.safeParse(req.body);
+  const input = await shikiSchema.safeParseAsync(req.body);
 
   if (!input.success) {
     return res.status(400).json({ error: input.error });

@@ -7,8 +7,7 @@
     "dev": "tsx watch ./server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "tsx scripts/test.ts",
-    "test-watch": "tsx watch scripts/test.ts"
+    "test": "vitest"
   },
   "type": "module",
   "author": "",
@@ -29,6 +28,7 @@
     "wait-port": "^1.1.0"
   },
   "devDependencies": {
-    "tsx": "^3.12.7"
+    "tsx": "^3.12.7",
+    "vitest": "^1.4.0"
   }
 }

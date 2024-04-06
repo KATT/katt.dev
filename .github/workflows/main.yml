@@ -22,3 +22,4 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/setup
       - run: pnpm turbo build
+      - run: pnpm turbo test
