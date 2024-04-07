@@ -6,6 +6,7 @@ const langs = [
   "js",
   "json",
   "jsx",
+  "markdown",
   "md",
   "ts",
   "tsx",

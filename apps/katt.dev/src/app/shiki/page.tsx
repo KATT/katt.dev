@@ -21,7 +21,7 @@ export default async function Page() {
 
       <h2>Markdown</h2>
       <ul className="space-y-6">
-        <Code file={`/src/app/shiki/_snippet.md`} lang="md" />
+        <Code file={`/src/app/shiki/_snippet.md`} lang="markdown" />
       </ul>
     </main>
   );
