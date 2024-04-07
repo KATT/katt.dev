@@ -25,15 +25,14 @@ export const ROOT_DIR = run(() => {
 export function dedupe<TArgs extends any[], TReturn>(
   fn: (...args: TArgs) => Promise<TReturn>
 ): (...args: TArgs) => Promise<TReturn> {
-  const running = new Map<string, Promise<TReturn>>();
+  const running = new Map<string, Promise<any>>();
   return (...args) => {
     const key = JSON.stringify(args);
-    let promise = running.get(key);
-    if (promise) {
-      return promise;
+    if (running.has(key)) {
+      return running.get(key) as Promise<TReturn>;
     }
 
-    promise = run(async () => {
+    const promise = run(async () => {
       try {
         return await fn(...args);
       } finally {
@@ -41,7 +40,6 @@ export function dedupe<TArgs extends any[], TReturn>(
       }
     });
     running.set(key, promise);
-
     return promise;
   };
 }

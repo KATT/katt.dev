@@ -21,3 +21,15 @@ test("dedupe", async () => {
 
   expect(spy).toHaveBeenCalledTimes(3);
 });
+
+test("dedupe generic fn", async () => {
+  const spy = vi.fn();
+  async function originalFn<T>(arg: T) {
+    spy(arg);
+    return arg;
+  }
+  const fn = dedupe(originalFn);
+
+  const result = await fn("foo" as const);
+  expectTypeOf(result).toEqualTypeOf<"foo">();
+});
