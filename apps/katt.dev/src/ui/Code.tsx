@@ -9,7 +9,10 @@ import { Suspense } from "react";
 async function Render(props: ShikiSchemaInput) {
   const html = await getShikiHtml(props);
   return (
-    <div dangerouslySetInnerHTML={{ __html: html }} className="not-prose" />
+    <div
+      dangerouslySetInnerHTML={{ __html: html }}
+      className="not-prose [&>*]:p-4 [&>*]:rounded-lg"
+    />
   );
 }
 export async function Code(
