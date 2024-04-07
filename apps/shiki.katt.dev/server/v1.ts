@@ -14,12 +14,26 @@ import { ROOT_DIR, dedupe, run } from "./utils.js";
 
 import { Redis } from "ioredis";
 
+type Result =
+  | {
+      error?: never;
+      html: string;
+    }
+  | {
+      error: {
+        message: string;
+        stack?: string;
+      };
+      html?: never;
+    };
+
 type Storage = {
   getHash: (hash: string) => Promise<ShikiSchemaOutput | null>;
   setHash: (hash: string, data: ShikiSchemaOutput) => Promise<void>;
-  getHtml: (data: ShikiSchemaOutput) => Promise<string | null>;
-  setHtml: (data: ShikiSchemaOutput, html: string) => Promise<void>;
+  getResult: (data: ShikiSchemaOutput) => Promise<Result | null>;
+  setResult: (data: ShikiSchemaOutput, html: Result) => Promise<void>;
 };
+
 const storage = run((): Storage => {
   if (env.REDIS_URL) {
     const redis = new Redis(env.REDIS_URL);
@@ -31,17 +45,18 @@ const storage = run((): Storage => {
       async setHash(hash, data) {
         await redis.set(hash, JSON.stringify(data));
       },
-      async getHtml(data) {
-        return redis.get(JSON.stringify(data));
+      async getResult(data) {
+        const value = await redis.get(JSON.stringify(data));
+        return value ? JSON.parse(value) : null;
       },
-      async setHtml(data, html) {
-        await redis.set(JSON.stringify(data), html);
+      async setResult(data, html) {
+        await redis.set(JSON.stringify(data), JSON.stringify(html));
       },
     };
     return redisStorage;
   }
   const hashToInput = new Map<string, ShikiSchemaOutput>();
-  const results = new Map<string, string>();
+  const results = new Map<string, Result>();
   const mockStorage: Storage = {
     async getHash(hash) {
       return hashToInput.get(hash) ?? null;
@@ -49,11 +64,11 @@ const storage = run((): Storage => {
     async setHash(hash, data) {
       hashToInput.set(hash, data);
     },
-    async getHtml(data) {
+    async getResult(data) {
       const key = JSON.stringify(data);
       return results.get(key) ?? null;
     },
-    async setHtml(data, html) {
+    async setResult(data, html) {
       const key = JSON.stringify(data);
       results.set(key, html);
     },
@@ -61,59 +76,83 @@ const storage = run((): Storage => {
   return mockStorage;
 });
 
-const getSchema = shikiSchema.or(
-  z
-    .object({
-      hash: z.string(),
-    })
-    .transform(async (data, ctx): Promise<ShikiSchemaOutput> => {
-      const input = await storage.getHash(data.hash);
-      if (!input) {
-        ctx.addIssue({
-          code: "custom",
-          message: "Hash not found",
-          path: ["hash"],
-        });
-        return z.NEVER;
-      }
-      return input;
-    })
-);
+const getSchema = shikiSchema
+  .or(
+    z
+      .object({
+        hash: z.string(),
+      })
+      .transform(async (data, ctx): Promise<ShikiSchemaOutput> => {
+        const input = await storage.getHash(data.hash);
+        if (!input) {
+          ctx.addIssue({
+            code: "custom",
+            message: "Hash not found",
+            path: ["hash"],
+          });
+          return z.NEVER;
+        }
+        return input;
+      })
+  )
+  .transform((data) => ({
+    _version: 0.1,
+    ...data,
+  }));
 
 export const v1Router = express.Router();
 
-const codeToHtmlDeduped = dedupe(async (input: ShikiSchemaOutput) => {
-  let html = await storage.getHtml(input);
+const codeToHtmlDeduped = dedupe(
+  async (input: ShikiSchemaOutput): Promise<Result> => {
+    let result = await storage.getResult(input);
+    if (result) {
+      return result;
+    }
+    try {
+      const html = await codeToHtml(input.code, {
+        lang: input.lang,
+        theme: "github-dark-default",
+        transformers: [
+          transformerTwoslash({
+            renderer:
+              input.renderer === "rich" ? rendererRich() : rendererClassic(),
+          }),
+        ],
+      });
+      result = { html };
+    } catch (cause) {
+      const error = cause as Error;
+      result = {
+        error: {
+          message: error.message,
+          stack: error.stack,
+        },
+      };
+    }
 
-  if (!html) {
-    html = await codeToHtml(input.code, {
-      lang: input.lang,
-      theme: "github-dark-default",
-      transformers: [
-        transformerTwoslash({
-          renderer:
-            input.renderer === "rich" ? rendererRich() : rendererClassic(),
-        }),
-      ],
-    });
-    await storage.setHtml(input, html);
+    await storage.setResult(input, result);
+
+    return result;
   }
-
-  return html;
-});
+);
 
 v1Router.get("/", async (req, res) => {
   if (env.AUTHORIZATION && req.headers.authorization !== env.AUTHORIZATION) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const input = await getSchema.safeParseAsync(req.query);
+  const parsed = await getSchema.safeParseAsync(req.query);
 
-  if (!input.success) {
-    return res.status(400).json({ error: input.error });
+  if (!parsed.success) {
+    return res.status(400).json({ error: parsed.error });
   }
+  const input = parsed.data;
 
-  const html = await codeToHtmlDeduped(input.data);
+  const result = await codeToHtmlDeduped(input);
+  if (result.error) {
+    res.setHeader("Content-Type", "text/markdown");
+    return res.status(422).send(result.error.message);
+  }
 
   // send html with cache for 1 year
   const oneYearInSeconds = 60 * 60 * 24 * 365;
@@ -122,10 +161,18 @@ v1Router.get("/", async (req, res) => {
   res.setHeader("Cache-Control", `public, max-age=${oneYearInSeconds}`);
   res.setHeader("Content-Type", "text/html");
 
-  const styleSheet = `<link rel="stylesheet" href="/v1/style-${input.data.renderer}.css" />`;
-  const withBody = input.data.htmlDoc
-    ? `<!DOCTYPE html><html lang="en"><head>${styleSheet}</head><body>${html}</body></html>`
-    : html;
+  const withBody: string = input.htmlDoc
+    ? [
+        `<!DOCTYPE html>`,
+        `<html lang="en">`,
+        `<head>`,
+        `  <link rel="stylesheet" href="/v1/style-${input.renderer}.css" />`,
+        `</head>`,
+        `  <body>${result.html}`,
+        `  </body>`,
+        `</html>`,
+      ].join("\n")
+    : result.html;
   return res.send(withBody);
 });
 
