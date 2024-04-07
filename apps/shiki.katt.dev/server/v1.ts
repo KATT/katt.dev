@@ -119,24 +119,20 @@ const codeToHtmlDeduped = dedupe(
           }),
         ],
       });
-      await storage.setResult(input, { html });
-      return { html };
+      result = { html };
     } catch (cause) {
       const error = cause as Error;
-      const result: Result = {
+      result = {
         error: {
           message: error.message,
           stack: error.stack,
         },
       };
-      await storage.setResult(input, {
-        error: {
-          message: error.message,
-          stack: error.stack,
-        },
-      });
-      return result;
     }
+
+    await storage.setResult(input, result);
+
+    return result;
   }
 );
 
