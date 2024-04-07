@@ -18,3 +18,41 @@ export const ROOT_DIR = run(() => {
   }
   return goUp(dirname);
 });
+
+/**
+ * Run a function and return the result, deduping the concurrent calls if the function is already running
+ */
+export const dedupe = run(() => {
+  const running = new Map<string, Promise<any>>();
+
+  return <TArgs extends any[], TReturn>(
+    fn: (...args: TArgs) => Promise<TReturn>
+  ): ((...args: TArgs) => Promise<TReturn>) => {
+    return (...args) => {
+      const key = JSON.stringify(args);
+      if (running.has(key)) {
+        console.log("deduped!!");
+        return running.get(key) as Promise<TReturn>;
+      }
+      console.log("not deduped");
+      const promise = run(async () => {
+        try {
+          return await fn(...args);
+        } finally {
+          running.delete(key);
+        }
+      });
+      running.set(
+        key,
+        run(async () => {
+          try {
+            return await fn(...args);
+          } finally {
+            running.delete(key);
+          }
+        })
+      );
+      return promise;
+    };
+  };
+});

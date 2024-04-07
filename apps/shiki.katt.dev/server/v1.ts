@@ -10,7 +10,7 @@ import path from "path";
 import { codeToHtml } from "shiki";
 import { z } from "zod";
 import { env } from "../env.js";
-import { ROOT_DIR, run } from "./utils.js";
+import { ROOT_DIR, dedupe, run } from "./utils.js";
 
 import { Redis } from "ioredis";
 
@@ -88,6 +88,28 @@ const getSchema = shikiSchema.or(
 
 export const v1Router = express.Router();
 
+const getResultDeduped = dedupe(async function getResultDeduped(
+  input: ShikiSchemaOutput
+) {
+  let html = await storage.getResultForSchemaOutput(input);
+
+  if (!html) {
+    html = await codeToHtml(input.code, {
+      lang: input.lang,
+      theme: "github-dark-default",
+      transformers: [
+        transformerTwoslash({
+          renderer:
+            input.renderer === "rich" ? rendererRich() : rendererClassic(),
+        }),
+      ],
+    });
+    await storage.setResultForSchemaOutput(input, html);
+  }
+
+  return html;
+});
+
 v1Router.get("/", async (req, res) => {
   if (env.AUTHORIZATION && req.headers.authorization !== env.AUTHORIZATION) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -99,21 +121,7 @@ v1Router.get("/", async (req, res) => {
     return res.status(400).json({ error: input.error });
   }
 
-  let html = await storage.getResultForSchemaOutput(input.data);
-
-  if (!html) {
-    html = await codeToHtml(input.data.code, {
-      lang: input.data.lang,
-      theme: "github-dark-default",
-      transformers: [
-        transformerTwoslash({
-          renderer:
-            input.data.renderer === "rich" ? rendererRich() : rendererClassic(),
-        }),
-      ],
-    });
-    await storage.setResultForSchemaOutput(input.data, html);
-  }
+  const html = await getResultDeduped(input.data);
 
   // send html with cache for 1 year
   const oneYearInSeconds = 60 * 60 * 24 * 365;
