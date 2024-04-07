@@ -27,10 +27,10 @@ export default function Page() {
           </time>
         </div>
 
-        <p>Hi</p>
+        <p>Hi, here's a tweet:</p>
 
         <div className="not-prose">
-          <Tweet id="1775835646491283604" />
+          <Tweet id="1594623014267658242" />
         </div>
 
         <div className="not-prose">
