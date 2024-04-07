@@ -2,16 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-/* dark mode can wait */
-/* 
+:root {
+  --color-fg: 20, 20, 20;
+  --color-bg: 244, 244, 244;
+}
+body {
+  background-color: rgb(var(--color-bg));
+  color: rgb(var(--color-fg));
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --color-fg: 244, 244, 244;
+    --color-bg: 20, 20, 20;
   }
-} 
-*/
+}
+
+/* transform all except .notprose with 300ms */
+*:not(.not-prose) {
+  transition: all 300ms ease-out;
+}
 
 @layer utilities {
   .text-balance {

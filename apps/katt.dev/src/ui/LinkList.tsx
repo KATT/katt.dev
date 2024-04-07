@@ -5,13 +5,15 @@ export function LinkList(props: {
   }[];
 }) {
   return (
-    <ul className="flex list-none space-x-4">
+    <ul className="flex list-none space-x-4 text-fg">
       {props.items.map((link) => (
-        <li
-          key={link.href}
-          className="flex flex-1 lowercase text-underline-500 underline"
-        >
-          <a href={link.href}>{link.title}</a>
+        <li key={link.href} className="flex flex-1">
+          <a
+            href={link.href}
+            className="hover:text-muted lowercase text-underline-500 underline"
+          >
+            {link.title}
+          </a>
         </li>
       ))}
     </ul>
