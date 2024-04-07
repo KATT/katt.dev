@@ -1,4 +1,7 @@
-console.log();
+import { z } from "zod";
+const foozzz = "bar";
 
-const hello = 'world';
-//      ^?
+// ..
+// ..
+const parsed = z.string().parse("foo");
+//     ^?

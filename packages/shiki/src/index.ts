@@ -6,7 +6,7 @@ const langs = [
   "js",
   "json",
   "jsx",
-  "markdown",
+  "md",
   "ts",
   "tsx",
 ] as const satisfies Options["lang"][];
@@ -29,7 +29,6 @@ const booleanSchema = z
 
 export const shikiSchema = z.object({
   lang: z.enum(langs),
-  theme: z.string().optional().default("github-dark"),
   code: z.string(),
   renderer: z.enum(["classic", "rich"]).default("rich"),
   htmlDoc: booleanSchema
