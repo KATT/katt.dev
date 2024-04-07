@@ -60,7 +60,10 @@ export async function getShikiHtml(input: ShikiSchemaInput) {
   const res = await fetch(url);
 
   if (res.status !== 200) {
-    throw new Error(`Failed to fetch ${url.toString()}: ${res.status}`);
+    throw new Error(
+      `Failed to fetch ${url.toString()}: ${res.status}: ${await res.text()}`
+    );
   }
+
   return await res.text();
 }
