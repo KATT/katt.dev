@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --color-fg: 20, 20, 20;
+  --color-fg: 24, 24, 24;
   --color-bg: 244, 244, 244;
 }
 body {
@@ -14,7 +14,7 @@ body {
 @media (prefers-color-scheme: dark) {
   :root {
     --color-fg: 244, 244, 244;
-    --color-bg: 20, 20, 20;
+    --color-bg: 24, 24, 24;
   }
 }
 

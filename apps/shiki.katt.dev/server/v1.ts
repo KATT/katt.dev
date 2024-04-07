@@ -112,8 +112,8 @@ const codeToHtmlDeduped = dedupe(
       const html = await codeToHtml(input.code, {
         lang: input.lang,
         themes: {
-          light: "github-light-default",
-          dark: "github-dark-default",
+          light: "github-light",
+          dark: "github-dark-dimmed",
         },
         transformers: [
           transformerTwoslash({
