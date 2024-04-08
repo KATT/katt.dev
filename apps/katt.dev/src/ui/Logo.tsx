@@ -30,7 +30,6 @@ export function Logo() {
       }}
       aria-label="an ASCII cat"
     >
-
       {logoWithWhite.map((line, i) => (
         <text key={i} y={i * 14} x="50%" text-anchor="middle">
           {line.replaceAll(" ", "\u00A0")}
