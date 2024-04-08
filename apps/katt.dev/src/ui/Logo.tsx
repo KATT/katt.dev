@@ -12,16 +12,27 @@ export function Logo() {
   const lineHeights = fontSize * 1.25;
   const lines = KATTCORP_LOGO.split("\n");
   const height = lines.length * lineHeights;
-  const width = lines.reduce((max, line) => Math.max(max, line.length), 0) * 10;
+  const lineWidth = lines.reduce((max, line) => Math.max(max, line.length), 0);
+  const width = lineWidth * 8.5;
+
+  const logoWithWhite = lines.map((line) =>
+    line.replaceAll(" ", " ").padEnd(lineWidth, " ")
+  );
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox={`0 0 ${width} ${height}`}
       aria-hidden
-      className="stroke-inherit fill-current w-40 h-40"
+      className="stroke-inherit fill-current font-mono text-sm select-none"
+      style={{
+        width: `${width}px`,
+      }}
+      aria-label="an ASCII cat"
     >
-      {KATTCORP_LOGO.split("\n").map((line, i) => (
-        <text key={i} x="0" y={i * 14} className="font-mono text-sm">
+
+      {logoWithWhite.map((line, i) => (
+        <text key={i} y={i * 14} x="50%" text-anchor="middle">
           {line.replaceAll(" ", "\u00A0")}
         </text>
       ))}
