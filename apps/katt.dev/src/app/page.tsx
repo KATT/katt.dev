@@ -1,5 +1,5 @@
-import { LinkList } from '@/ui/LinkList';
-import { Logo } from '@/ui/Logo';
+import { LinkList } from "@/ui/LinkList";
+import { Logo } from "@/ui/Logo";
 
 export default function Page() {
   return (
@@ -7,13 +7,13 @@ export default function Page() {
       <Logo />
       <LinkList
         items={[
-          { href: 'https://github.com/KATT', title: 'GitHub' },
-          { href: 'https://twitter.com/alexdotjs', title: 'Twitter' },
+          { href: "https://github.com/KATT", title: "GitHub" },
+          { href: "https://twitter.com/alexdotjs", title: "Twitter" },
           {
-            href: 'https://linkedin.com/in/johanssonalexander/',
-            title: 'LinkedIn',
+            href: "https://linkedin.com/in/johanssonalexander/",
+            title: "LinkedIn",
           },
-          { href: 'mailto: alex@kattcorp.com', title: 'Email' },
+          { href: "mailto: alexander@n1s.se", title: "Email" },
         ]}
       />
     </main>
