@@ -21,13 +21,13 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "KATTCORP",
-            legalName: "KATTCORP AB",
-            url: "http://kattcorp.com",
+            url: "http://katt.dev",
             foundingDate: "2016-10-26",
             founders: [
               {
                 "@type": "Person",
-                name: "Alexander Johansson",
+                name: "Alex Johansson",
+                alternateName: "KATT",
               },
             ],
             address: {
@@ -36,8 +36,7 @@ export default function RootLayout({
             },
             contactPoint: {
               "@type": "ContactPoint",
-              contactType: "sales",
-              email: "alex@kattcorp.com",
+              email: "alexander@n1s.se",
               url: "https://twitter.com/alexdotjs",
             },
             sameAs: [
@@ -48,6 +47,7 @@ export default function RootLayout({
               "https://katt.dev",
               "https://kattcorp.com",
               "https://kattcorp.co.uk",
+              "https://n1s.se",
             ],
           }}
         />
@@ -58,9 +58,8 @@ export default function RootLayout({
 }
 
 export const metadata: Metadata = {
-  title: "KATTCORP",
-  description:
-    "KATTCORP is a software development company based in Sweden. We're a small team of developers who love to build things.",
+  title: "katt.dev",
+  description: "Alex / KATT based in Sweden and the creator of tRPC",
   metadataBase: new URL("https://katt.dev"),
   alternates: {
     canonical: "/",
