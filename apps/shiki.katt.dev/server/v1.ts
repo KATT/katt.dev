@@ -36,14 +36,25 @@ type Storage = {
 
 const storage = run((): Storage => {
   if (env.REDIS_URL) {
+    const timeoutMs = 60_000;
     const redis = new Redis(env.REDIS_URL, {
       // killing the connection after 10 seconds of inactivity
       // enables Railway to sleep
-      keepAlive: 10_000,
+      keepAlive: timeoutMs,
     });
 
     redis.on("connect", () => {
+      redis.stream.setTimeout(timeoutMs);
       console.debug("Connected to redis");
+      redis.stream.on("timeout", () => {
+        console.debug("Redis stream timeout");
+      });
+      redis.stream.on("end", () => {
+        console.debug("Redis stream end");
+      });
+      redis.stream.on("connect", () => {
+        console.debug("Redis stream connect");
+      });
     });
     redis.on("error", (error) => {
       console.error({ error }, "Redis error");
