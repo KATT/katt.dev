@@ -36,7 +36,24 @@ type Storage = {
 
 const storage = run((): Storage => {
   if (env.REDIS_URL) {
-    const redis = new Redis(env.REDIS_URL);
+    const redis = new Redis(env.REDIS_URL, {
+      // killing the connection after 10 seconds of inactivity
+      // enables Railway to sleep
+      keepAlive: 10_000,
+    });
+
+    redis.on("connect", () => {
+      console.debug("Connected to redis");
+    });
+    redis.on("error", (error) => {
+      console.error({ error }, "Redis error");
+    });
+    redis.on("close", () => {
+      console.debug("Disconnected from redis");
+    });
+    redis.on("reconnecting", () => {
+      console.debug("Reconnecting to redis");
+    });
     const redisStorage: Storage = {
       async getHash(hash) {
         const data = await redis.get(hash);
