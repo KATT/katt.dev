@@ -54,7 +54,10 @@ export async function getShikiHtml(input: ShikiSchemaInput) {
     url.searchParams.set(key, value);
   }
 
-  console.log(url);
+  console.debug("getShikiHtml()", {
+    input,
+    url: url.toString(),
+  });
 
   await fetch(url);
   const res = await fetch(url);
