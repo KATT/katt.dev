@@ -3,11 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   },
   "type": "module",
   "scripts": {
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "build": "tsc",
+    "dev": "tsc -w"
   },
   "dependencies": {
     "@shikijs/twoslash": "^1.2.4",
