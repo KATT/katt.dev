@@ -4,11 +4,13 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
+      // "Cache all files emitted to workspace's dist/** or .next
+      // directories by a `build` task"
       "outputs": [
+        //
+        "dist/**",
         ".next/**",
-        "!.next/cache/**",
-        "packages/*/dist",
-        "apps/*/dist"
+        "!.next/cache/**"
       ]
     },
     "lint": {
