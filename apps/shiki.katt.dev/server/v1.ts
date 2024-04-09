@@ -213,3 +213,12 @@ v1Router.get("/style-classic.css", async (req, res) => {
   );
   res.sendFile(fileName);
 });
+
+v1Router.get("/health", async (req, res) => {
+  try {
+    await storage.getHash("hello");
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ status: "error", error: (error as Error).message });
+  }
+});
