@@ -5,7 +5,7 @@ const KATTCORP_LOGO = `
  (           )
  //"//""//"//
  
-  KATTCORP AB`;
+    KATT.DEV`;
 
 export function Logo() {
   const fontSize = 12;
