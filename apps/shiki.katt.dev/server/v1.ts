@@ -217,6 +217,15 @@ v1Router.get("/style-classic.css", async (req, res) => {
 v1Router.get("/health", async (req, res) => {
   try {
     await storage.getHash("hello");
+
+    await run(async () => {
+      if (env.REDIS_PUBLIC_URL) {
+        // wake redis up by pinging it
+        const redis = new Redis(env.REDIS_PUBLIC_URL);
+        await redis.ping();
+        redis.disconnect();
+      }
+    });
     res.status(200).json({ status: "ok" });
   } catch (error) {
     res.status(500).json({ status: "error", error: (error as Error).message });
