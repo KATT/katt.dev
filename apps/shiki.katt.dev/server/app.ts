@@ -1,8 +1,11 @@
 import bodyParser from "body-parser";
 import express from "express";
 import { v1Router } from "./v1.js";
+import { pinoHttp } from "pino-http";
 
 export const app = express();
+
+app.use(pinoHttp());
 
 app.use(bodyParser.json());
 app.get("/", (_req, res) => {

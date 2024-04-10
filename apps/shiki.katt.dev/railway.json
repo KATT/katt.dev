@@ -6,7 +6,7 @@
   },
   "deploy": {
     "numReplicas": 1,
-    "startCommand": "sleep 10 && cd apps/shiki.katt.dev && pnpm start",
+    "startCommand": "cd apps/shiki.katt.dev && pnpm start",
     "healthcheckPath": "/v1/health",
     "sleepApplication": true,
     "restartPolicyType": "ON_FAILURE",
