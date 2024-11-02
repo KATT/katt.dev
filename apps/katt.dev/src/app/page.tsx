@@ -21,14 +21,14 @@ export default function Page() {
       icon: <TwitterIcon />,
     },
     {
-      href: "https://linkedin.com/in/johanssonalexander/",
-      title: "LinkedIn",
-      icon: <LinkedInIcon />,
-    },
-    {
       href: "https://bsky.app/profile/katt.dev",
       title: "Bluesky",
       icon: <BlueskyIcon />,
+    },
+    {
+      href: "https://linkedin.com/in/johanssonalexander/",
+      title: "LinkedIn",
+      icon: <LinkedInIcon />,
     },
     {
       href: "mailto:alexander@n1s.se",
@@ -38,7 +38,7 @@ export default function Page() {
   ];
 
   return (
-    <main className="flex flex-col items-center justify-center flex-1 space-y-4">
+    <main className="flex flex-col items-center justify-center flex-1 space-y-8">
       <Logo />
       <LinkList items={socialLinks} />
     </main>
