@@ -48,6 +48,7 @@ export default function RootLayout({
               "https://kattcorp.com",
               "https://kattcorp.co.uk",
               "https://n1s.se",
+              "https://bsky.app/profile/katt.dev",
             ],
           }}
         />
