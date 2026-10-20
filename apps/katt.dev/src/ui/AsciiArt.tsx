@@ -11,6 +11,7 @@ export function AsciiArt(props: { art: AsciiArtData; className?: string }) {
       fill="currentColor"
       stroke="currentColor"
       aria-hidden
+      preserveAspectRatio="xMidYMid meet"
       // The stroke matches the weight macOS font smoothing adds when these
       // glyphs are rendered as text, which is heavier for light-on-dark.
       className={["stroke-[0.15] dark:stroke-[0.3]", props.className]
