@@ -14,7 +14,7 @@ export function LinkList(props: { items: LinkListItem[] }) {
             className="flex items-center gap-2 hover:text-muted lowercase hover:text-underline-500 hover:underline"
           >
             {link.icon && (
-              <span className="flex w-8 justify-center">{link.icon}</span>
+              <span className="flex w-10 justify-center">{link.icon}</span>
             )}
             {link.title}
           </a>
