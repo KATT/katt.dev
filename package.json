@@ -4,21 +4,18 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
+    "lint": "oxlint --deny-warnings",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
-  "dependencies": {
-    "zod": "^3.21.4"
-  },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "oxlint": "^1.88.0",
     "prettier": "^3.2.5",
-    "turbo": "latest"
+    "turbo": "^2.11.9"
   },
-  "packageManager": "pnpm@8.9.0",
+  "packageManager": "pnpm@12.14.0",
   "engines": {
-    "node": "^20.10.0",
-    "pnpm": "^8.0.0"
+    "node": ">=24",
+    "pnpm": ">=12"
   }
 }
