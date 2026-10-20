@@ -6,7 +6,7 @@ export type LinkListItem = {
 
 export function LinkList(props: { items: LinkListItem[] }) {
   return (
-    <ul className="flex flex-wrap justify-center list-none gap-x-5 gap-y-2 text-fg">
+    <ul className="flex list-none flex-col items-center space-y-2 text-fg sm:flex-row sm:items-stretch sm:space-x-4 sm:space-y-0">
       {props.items.map((link) => (
         <li key={link.href}>
           <a
