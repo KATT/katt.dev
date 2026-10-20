@@ -51,6 +51,39 @@ const specs: Record<string, ArtSpec> = {
     width: 136,
     height: 120,
   },
+  ...Object.fromEntries(
+    Object.entries({
+      githubIcon: String.raw`
+/\_/\
+(o.o)
+`,
+      twitterIcon: String.raw`
+\/
+/\
+`,
+      blueskyIcon: String.raw`
+(\/)
+(/\)
+`,
+      linkedInIcon: String.raw`
+[in]
+`,
+      emailIcon: String.raw`
+ ___
+|\_/|
+|___|
+`,
+    }).map(([name, art]): [string, ArtSpec] => [
+      name,
+      {
+        art: art.slice(1, -1),
+        fontSize: 10,
+        lineHeight: 8,
+        layout: "fit",
+        padding: 0,
+      },
+    ]),
+  ),
 };
 
 type Box = { minX: number; minY: number; maxX: number; maxY: number };
