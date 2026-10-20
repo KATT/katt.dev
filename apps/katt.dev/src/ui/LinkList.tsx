@@ -6,16 +6,14 @@ export type LinkListItem = {
 
 export function LinkList(props: { items: LinkListItem[] }) {
   return (
-    <ul className="flex flex-col sm:flex-row list-none sm:space-x-4 space-y-2 sm:space-y-0 text-fg">
+    <ul className="flex flex-wrap justify-center list-none gap-x-5 gap-y-2 text-fg">
       {props.items.map((link) => (
-        <li key={link.href} className="sm:flex-1">
+        <li key={link.href}>
           <a
             href={link.href}
-            className="flex items-center gap-2 hover:text-muted lowercase hover:text-underline-500 hover:underline"
+            className="inline-flex items-center gap-1 hover:text-muted lowercase hover:underline"
           >
-            {link.icon && (
-              <span className="flex w-8 justify-center">{link.icon}</span>
-            )}
+            {link.icon}
             {link.title}
           </a>
         </li>

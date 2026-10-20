@@ -1,6 +1,6 @@
 import { AsciiArt } from "./AsciiArt";
 import { kattLogo } from "./ascii-art.generated";
 
-export function Logo() {
-  return <AsciiArt art={kattLogo} />;
+export function Logo(props: { className?: string }) {
+  return <AsciiArt art={kattLogo} className={props.className} />;
 }

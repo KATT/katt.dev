@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} h-full min-h-screen flex flex-col`}>
+      <body className={`${inter.className} flex min-h-dvh flex-col`}>
         {children}
 
         <JsonLd

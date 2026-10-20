@@ -38,8 +38,8 @@ export default function Page() {
   ];
 
   return (
-    <main className="flex flex-col items-center justify-center flex-1 space-y-8">
-      <Logo />
+    <main className="flex min-h-0 flex-1 flex-col items-center justify-center gap-6 px-4 py-6 sm:gap-8">
+      <Logo className="h-auto max-h-[min(7.5rem,36svh)] w-auto max-w-[min(8.5rem,70vw)]" />
       <LinkList items={socialLinks} />
     </main>
   );
