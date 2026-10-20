@@ -1,17 +1,10 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://turborepo.com/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      // "Cache all files emitted to workspace's dist/** or .next
-      // directories by a `build` task"
-      "outputs": [
-        //
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**"
-      ]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -20,7 +13,6 @@
       "cache": false,
       "persistent": true,
       "dependsOn": ["^build"]
-    },
-    "test": {}
+    }
   }
 }
