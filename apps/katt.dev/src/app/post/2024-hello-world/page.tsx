@@ -19,7 +19,7 @@ export default function Page() {
         <h1>{headline}</h1>
         <div>
           <time dateTime={postDate}>
-            {Intl.DateTimeFormat("en-US", {
+            {new Intl.DateTimeFormat("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",

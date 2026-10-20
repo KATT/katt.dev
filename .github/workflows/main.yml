@@ -21,4 +21,5 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/setup
-      - run: pnpm turbo build lint
+      - run: pnpm turbo build
+      - run: pnpm lint
