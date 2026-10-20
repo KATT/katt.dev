@@ -53,35 +53,14 @@ const specs: Record<string, ArtSpec> = {
   },
   ...Object.fromEntries(
     Object.entries({
-      githubIcon: String.raw`
-/\_/\
-(o.o)
-`,
-      twitterIcon: String.raw`
-\/
-/\
-`,
-      blueskyIcon: String.raw`
-(\/)
-(/\)
-`,
-      linkedInIcon: String.raw`
-[in]
-`,
-      emailIcon: String.raw`
- ___
-|\_/|
-|___|
-`,
+      githubIcon: "=^.^=",
+      twitterIcon: "(X)",
+      blueskyIcon: "}i{",
+      linkedInIcon: "[in]",
+      emailIcon: "(@)",
     }).map(([name, art]): [string, ArtSpec] => [
       name,
-      {
-        art: art.slice(1, -1),
-        fontSize: 10,
-        lineHeight: 8,
-        layout: "fit",
-        padding: 0,
-      },
+      { art, fontSize: 13, lineHeight: 13, layout: "fit", padding: 0 },
     ]),
   ),
 };
